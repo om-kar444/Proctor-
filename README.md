@@ -19,13 +19,9 @@
 
 </table>
 
-</div>
-<div style="overflow-x: auto; white-space: nowrap;">
-  <img src="IMAGE1" width="400"/>
-  <img src="IMAGE2" width="400"/>
-  <img src="IMAGE3" width="400"/>
-  <img src="IMAGE4" width="400"/>
-</div>
+<a href="FULL_IMAGE_LINK">
+  <img src="FULL_IMAGE_LINK" width="400">
+</a>
 
 
 
