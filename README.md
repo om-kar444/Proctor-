@@ -4,7 +4,6 @@
 <img src="https://github.com/user-attachments/assets/9148bd51-c2d9-4f7b-93f5-a7ee339f7cbf" style="width:400px; flex-shrink:0;">
 <img src="https://github.com/user-attachments/assets/f7619cdf-5349-46eb-9e29-076ee3089655" style="width:400px; flex-shrink:0;">
 <img src="https://github.com/user-attachments/assets/7bdaa762-1220-40cf-800c-b5f36523a044" style="width:400px; flex-shrink:0;">
-<img src="https://github.com/user-attachments/assets/81dca667-f7dc-455d-a604-64812cc3938b" style="width:400px; flex-shrink:0;">
 <img src="https://github.com/user-attachments/assets/1d5b1f0c-b63b-469e-8ee0-084aad3104c2" style="width:400px; flex-shrink:0;">
 <img src="https://github.com/user-attachments/assets/c6f0b52b-1e06-46c7-914e-7666c869882e" style="width:400px; flex-shrink:0;">
 <img src="https://github.com/user-attachments/assets/65922850-76d6-4ad1-bd2d-39c19729dea0" style="width:400px; flex-shrink:0;">
