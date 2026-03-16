@@ -1,28 +1,16 @@
-<h2>📸 Project Screenshots</h2>
+<div style="display:flex; overflow-x:auto; gap:10px;">
 
-<div align="center">
+<img src="https://github.com/user-attachments/assets/70b90cc3-da5c-454c-86d5-962d26c9fc87" width="400"/>
+<img src="https://github.com/user-attachments/assets/9148bd51-c2d9-4f7b-93f5-a7ee339f7cbf" width="400"/>
+<img src="https://github.com/user-attachments/assets/f7619cdf-5349-46eb-9e29-076ee3089655" width="400"/>
+<img src="https://github.com/user-attachments/assets/7bdaa762-1220-40cf-800c-b5f36523a044" width="400"/>
+<img src="https://github.com/user-attachments/assets/1d5b1f0c-b63b-469e-8ee0-084aad3104c2" width="400"/>
+<img src="https://github.com/user-attachments/assets/c6f0b52b-1e06-46c7-914e-7666c869882e" width="400"/>
+<img src="https://github.com/user-attachments/assets/65922850-76d6-4ad1-bd2d-39c19729dea0" width="400"/>
+<img src="https://github.com/user-attachments/assets/f25b7919-eb2d-4ca3-88be-dae234603260" width="400"/>
+<img src="https://github.com/user-attachments/assets/b3257d6c-c5df-4263-8827-00ff562f6717" width="400"/>
 
-<table>
-<tr>
-<td><img src="https://github.com/user-attachments/assets/70b90cc3-da5c-454c-86d5-962d26c9fc87" width="400"></td>
-<td><img src="https://github.com/user-attachments/assets/9148bd51-c2d9-4f7b-93f5-a7ee339f7cbf" width="400"></td>
-<td><img src="https://github.com/user-attachments/assets/f7619cdf-5349-46eb-9e29-076ee3089655" width="400"></td>
-<td><img src="https://github.com/user-attachments/assets/7bdaa762-1220-40cf-800c-b5f36523a044" width="400"></td>
-</tr>
-
-<tr>
-<td><img src="https://github.com/user-attachments/assets/1d5b1f0c-b63b-469e-8ee0-084aad3104c2" width="400"></td>
-<td><img src="https://github.com/user-attachments/assets/c6f0b52b-1e06-46c7-914e-7666c869882e" width="400"></td>
-<td><img src="https://github.com/user-attachments/assets/65922850-76d6-4ad1-bd2d-39c19729dea0" width="400"></td>
-<td><img src="https://github.com/user-attachments/assets/f25b7919-eb2d-4ca3-88be-dae234603260" width="400"></td>
-</tr>
-
-</table>
-
-<a href="FULL_IMAGE_LINK">
-  <img src="FULL_IMAGE_LINK" width="400">
-</a>
-
+</div>
 
 
 
