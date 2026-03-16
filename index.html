@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Proctor</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/proctor.css') }}">
+</head>
+<body>
+
+<!-- Violation toast banners -->
+<div id="toast-tab"   class="vio-toast toast-tab">  <span class="toast-icon">🔀</span> TAB SWITCH — VIOLATION RECORDED   <span class="toast-bar"></span></div>
+<div id="toast-phone" class="vio-toast toast-phone"><span class="toast-icon">📱</span> PHONE DETECTED — VIOLATION RECORDED<span class="toast-bar"></span></div>
+<div id="toast-face"  class="vio-toast toast-face"> <span class="toast-icon">👤</span> FACE ABSENT — VIOLATION RECORDED  <span class="toast-bar"></span></div>
+<div id="toast-copy"  class="vio-toast toast-copy"> <span class="toast-icon">📋</span> COPY/PASTE — VIOLATION RECORDED   <span class="toast-bar"></span></div>
+
+<!-- Resize blur-block overlay -->
+<div id="resize-block-overlay">
+  <div class="rb-card">
+    <span class="rb-icon">🖥️</span>
+    <h2>WINDOW TOO SMALL</h2>
+    <p style="color:#ccc;margin-bottom:6px;">Your window must be fullscreen to continue the exam.</p>
+    <button class="rb-fullscreen-btn" onclick="goFullscreenFromOverlay()">
+      ⛶ &nbsp; Click to go Fullscreen
+    </button>
+    <p style="margin-top:12px;color:#777;font-size:0.78rem;">
+      Or press <kbd style="background:#444;color:#fff;padding:1px 6px;border-radius:3px;">F11</kbd>
+      — the overlay removes itself automatically.
+    </p>
+    <div class="rb-bar" style="margin-top:14px;"><div class="rb-bar-fill"></div></div>
+  </div>
+</div>
+
+<!-- Exit confirmation overlay -->
+<div id="exit-overlay">
+  <div class="exit-dialog">
+    <h2>End Session &amp; Exit?</h2>
+    <p>This will stop proctoring, save the session report, and end the exam.<br>
+       This action cannot be undone.</p>
+    <div class="exit-dialog-btns">
+      <button id="exit-cancel-btn" onclick="closeExitDialog()">Cancel</button>
+      <button id="exit-confirm-btn" onclick="confirmExit()">End Session</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 1 — SCREEN SHARE REQUEST
+═══════════════════════════════════════════ -->
+<div id="screenshare-page">
+  <h1>AI Proctor — Screen Share Required</h1>
+  <p class="subtitle">Before viewing exam instructions, you must share your screen.</p>
+
+  <div class="instructions-card" style="max-width:480px;">
+    <div class="instructions-header">Step 1 of 2 — Share Your Screen</div>
+    <div style="padding:20px 18px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:16px;">
+        <span style="font-size:2rem;">🖥️</span>
+        <div>
+          <div style="font-weight:600;font-size:0.92rem;margin-bottom:5px;">Entire Screen sharing is mandatory</div>
+          <div style="font-size:0.83rem;color:#444;line-height:1.6;">
+            Click <strong>Share Screen</strong> below. Your browser will open a sharing dialog — select
+            <strong>Entire Screen</strong> (not a window or tab) and click <strong>Share</strong>.<br><br>
+            Refusing or sharing only a window will block you from proceeding to the exam.
+          </div>
+        </div>
+      </div>
+      <div id="share-status" style="display:none;padding:9px 12px;border-radius:3px;font-size:0.83rem;margin-bottom:14px;"></div>
+      <button id="btn-share" onclick="requestScreenShare()"
+              style="padding:9px 24px;font-size:0.88rem;font-weight:600;background:#111;color:#fff;border:none;border-radius:3px;cursor:pointer;width:100%;">
+        🖥️ &nbsp; Share Screen
+      </button>
+    </div>
+  </div>
+
+  <div style="width:480px;margin-top:10px;font-size:0.78rem;color:#999;text-align:center;">
+    Your screen recording is used only for proctoring purposes during this exam session.
+    The recording will be saved securely.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 2 — INSTRUCTIONS
+═══════════════════════════════════════════ -->
+<div id="instructions-page" style="display:none;">
+  <h1>AI Proctor — Exam Instructions</h1>
+  <p class="subtitle">Screen sharing active ✓ &nbsp;—&nbsp; Please read all rules carefully before starting.</p>
+
+  <div class="instructions-card">
+    <div class="instructions-header">Step 2 of 2 — Exam Rules &amp; Requirements</div>
+    <ul class="rules-list">
+      <li><span class="rule-icon">🚫</span>
+          <span><strong>Do not switch tabs or windows</strong> during the exam. Tab switches or window resizing will be flagged as violations.</span></li>
+      <li><span class="rule-icon">📵</span>
+          <span><strong>Keep your mobile phone away.</strong> Do not pick up or display any phone, earphones, or electronic device.</span></li>
+      <li><span class="rule-icon">👤</span>
+          <span><strong>Keep your face fully visible</strong> at all times. Look directly at the camera.</span></li>
+      <li><span class="rule-icon">🙈</span>
+          <span><strong>Do not hide your face.</strong> Covering your face will trigger a violation.</span></li>
+      <li><span class="rule-icon">📋</span>
+          <span><strong>Copy-paste is not allowed.</strong> Any copy or paste action will be flagged as a violation.</span></li>
+      <li><span class="rule-icon">🖥️</span>
+          <span><strong>Stay in full-screen mode.</strong> Do not minimise, resize, or reduce the browser window.</span></li>
+      <li><span class="rule-icon">🔒</span>
+          <span><strong>All browser extensions are blocked</strong> for the duration of this session.</span></li>
+      <li><span class="rule-icon">🎥</span>
+          <span><strong>Your screen is being recorded.</strong> The recording will be saved for review.</span></li>
+    </ul>
+  </div>
+
+  <label class="consent-row">
+    <input type="checkbox" id="consent-check" onchange="toggleConfirm()">
+    I have read and agree to all the rules above. I understand that violations will be recorded and may affect my result.
+  </label>
+
+  <button id="btn-confirm" disabled onclick="goToProctor()">
+    Confirm &amp; Start Session
+  </button>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 3 — PROCTOR
+═══════════════════════════════════════════ -->
+<div id="proctor-page">
+  <h1 class="page-title">AI Proctor</h1>
+
+  <div id="main-layout">
+    <!-- LEFT: video -->
+    <div id="left-col">
+      <div id="cam-placeholder">Session not started</div>
+      <img id="feed" src="" alt="Live feed">
+
+      <div id="controls">
+        <button class="ctrl-btn" id="btn-start" onclick="startSession()">Start Session</button>
+        <button class="ctrl-btn" id="btn-stop"  onclick="stopSession()" disabled>Stop</button>
+        <button id="btn-exit" onclick="showExitDialog()">Exit Exam</button>
+      </div>
+    </div>
+
+    <!-- RIGHT: stats + report -->
+    <div id="right-col">
+      <div id="stats">
+        <div>
+          <div class="stat-label">Status</div>
+          <div class="stat-value" id="s-status">Idle</div>
+        </div>
+        <div>
+          <div class="stat-label">Face violations</div>
+          <div class="stat-value" id="s-face">0</div>
+        </div>
+        <div>
+          <div class="stat-label">Phone detected</div>
+          <div class="stat-value" id="s-phone">0</div>
+        </div>
+        <div>
+          <div class="stat-label">Tab/Resize</div>
+          <div class="stat-value" id="s-tabswitch">0</div>
+        </div>
+        <div>
+          <div class="stat-label">Copy-Paste</div>
+          <div class="stat-value" id="s-copypaste">0</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:14px;">
+        <div class="stat-label">Duration</div>
+        <div class="stat-value" id="s-duration">—</div>
+      </div>
+
+      <!-- Absence progress bar -->
+      <div id="absent-row" style="display:none; margin-bottom:16px;">
+        <div class="stat-label" style="margin-bottom:4px;">
+          Face absent: <span id="s-absent">0.0s</span>
+        </div>
+        <div style="width:300px; height:6px; background:#eee; border:1px solid #ccc; border-radius:2px;">
+          <div id="absent-bar"
+               style="height:100%; width:0%; background:#cc2200; border-radius:2px; transition:width 0.2s;"></div>
+        </div>
+      </div>
+
+      <div id="report-box">
+        <h2>Session Report</h2>
+        <pre id="report-pre"></pre>
+        <div style="margin-top:10px;font-size:0.78rem;color:#666;">
+          Full report printed to terminal. Recording saved to <code>./recordings/</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/proctor.js') }}"></script>
+</body>
+</html>
